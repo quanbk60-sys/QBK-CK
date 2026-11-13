@@ -1,0 +1,12 @@
+{
+  "name": "QBK Chứng khoán",
+  "short_name": "QBK-CK",
+  "description": "9 AI agent phân tích cổ phiếu Việt Nam – bản tin, mã tiềm năng, phân tích sâu",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1115",
+  "theme_color": "#0f1115",
+  "lang": "vi",
+  "icons": [{"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}

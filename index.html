@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="QBK-CK">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>QBK Chứng khoán</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--card2:#1e222b;--line:#262b35;--ink:#e7e9ee;--ink2:#c3c9d3;--muted:#a3abb8;
+--blue:#2f81f7;--blue2:#7ab4ff;--green:#4fd1b5;--red:#ff8a80;--amber:#f5c27a;--amberbg:#2a1e10}
+*{box-sizing:border-box}[hidden]{display:none!important}html,body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+button,input,textarea{font-family:inherit}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(14px + env(safe-area-inset-top)) 0 10px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{font-size:20px;margin:0;letter-spacing:-.2px}.sub{font-size:12px;color:var(--muted)}
+h3{font-size:16px;margin:0}
+.icon-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);
+display:flex;align-items:center;justify-content:center;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:0 0 10px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:480px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:var(--card2);border-radius:10px;padding:10px;min-width:0}
+.tile .k{font-size:11px;color:var(--muted)}.tile .v{font-size:15px;font-weight:600;margin-top:2px;overflow-wrap:anywhere}
+.pill{display:inline-block;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:700;white-space:nowrap}
+.buy{background:#0f3a33;color:var(--green)}.sell{background:#3a1515;color:var(--red)}.hold{background:#16263f;color:var(--blue2)}
+.wait{background:#262b35;color:var(--ink2)}.probe{background:var(--amberbg);color:var(--amber)}
+.chip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid var(--line);color:var(--ink2);margin:2px 4px 2px 0}
+.ok{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--amber)}
+.banner{background:var(--amberbg);border:1px solid #4a3216;color:var(--amber);border-radius:12px;padding:10px 12px;font-size:13px;margin:12px 0}
+ul.pts{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.55;color:var(--ink2)}
+p.t{font-size:14px;line-height:1.55;color:var(--ink2);margin:8px 0}
+.news{padding:12px 0;border-top:1px solid var(--line)}.news:first-of-type{border-top:none}
+.news a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;line-height:1.4}
+.news .m{font-size:11px;color:var(--muted);margin-top:4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.filters button{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-size:13px;cursor:pointer}
+.filters button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn{height:44px;padding:0 14px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.btn.sm{height:34px;font-size:13px;padding:0 12px}
+.btn.ghost{background:transparent;border:1px solid #343a46;color:var(--ink)}
+.btn.red{background:#5a1f1f}.btn:disabled{opacity:.5;cursor:default}
+.inp{width:100%;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--ink);padding:10px 12px;font-size:16px}
+details summary{list-style:none;cursor:pointer}details summary::-webkit-details-marker{display:none}
+.agent{background:var(--card2);border-radius:12px;padding:12px;margin-top:8px}
+.score{font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;background:#232833}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media (max-width:480px){.vs{grid-template-columns:1fr}}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}.bar>div{height:8px;background:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px 4px;border-top:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;border-top:none}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+svg.spark{display:block}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid #1e222b;padding:6px 8px calc(10px + env(safe-area-inset-bottom));z-index:6}
+nav .in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+nav button{height:52px;border:none;background:transparent;color:#8b94a3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;cursor:pointer}
+nav button.on{color:var(--blue2)}
+.lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.lock .box{width:100%;max-width:360px;text-align:center}
+.lock input{margin:14px 0 10px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.empty{color:var(--muted);font-size:14px;text-align:center;padding:24px 0}
+</style>
+</head>
+<body>
+<div id="lock" class="lock"><form class="box" id="lockForm">
+  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#7ab4ff" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg>
+  <h1 style="margin-top:10px">QBK Chứng khoán</h1>
+  <div class="sub">9 AI agent phân tích cổ phiếu Việt Nam</div>
+  <label for="pw" class="sr-only">Mật khẩu</label>
+  <input id="pw" class="inp" type="password" autocomplete="current-password" placeholder="Mật khẩu app" required>
+  <button class="btn" style="width:100%">Mở khóa</button>
+  <div class="sub" id="lockMsg" style="margin-top:10px"></div>
+</form></div>
+
+<div id="app" hidden>
+  <header><div class="wrap">
+    <div><h1>QBK Chứng khoán</h1><div class="sub" id="upd"></div></div>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" id="reload" aria-label="Tải lại"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+      <button class="icon-btn" id="settings" aria-label="Cài đặt"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    </div>
+  </div></header>
+  <main class="wrap" id="view"></main>
+  <nav aria-label="Điều hướng chính"><div class="in" id="tabs"></div></nav>
+</div>
+
+<script>
+"use strict";
+const TABS = [
+  ["tin", "Bản tin", '<path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M8 9h5M8 13h5"/>'],
+  ["top", "Tiềm năng", '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>'],
+  ["pt", "Phân tích", '<path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/>'],
+  ["wl", "Theo dõi", '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>'],
+  ["ls", "Lịch sử", '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'],
+];
+const PRESETS = {"tong-hop": "Tổng hợp", "canslim": "CANSLIM", "breakout": "Breakout", "gia-tri": "Giá trị", "phuc-hoi": "Phục hồi"};
+const ACTION_CLS = {"MUA": "buy", "MUA THĂM DÒ": "probe", "NẮM GIỮ": "hold", "CHỐT LỜI": "probe", "BÁN": "sell", "ĐỨNG NGOÀI": "wait"};
+const AGENT_NAME = {fundamental: "① Cơ bản", technical: "② Kỹ thuật", news: "③ Tin tức", macro: "④ Vĩ mô & ngành"};
+const SENT_COLOR = {"2": "#4fd1b5", "1": "#4fd1b5", "0": "#8b94a3", "-1": "#ff8a80", "-2": "#ff8a80"};
+const WAIT_MS = 150000;
+let DATA = null, PASS = null, TAB = "tin", NEWS_F = "all", TOKEN = null, OPEN = null;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num = (x, d = 1) => (x === null || x === undefined || x === "" || Number.isNaN(+x)) ? "–" : Number(x).toLocaleString("vi-VN", {minimumFractionDigits: d, maximumFractionDigits: d});
+const sgn = (x, d = 1) => (x === null || x === undefined) ? "–" : `<span class="${x > 0 ? "ok" : x < 0 ? "bad" : ""}">${x > 0 ? "+" : ""}${num(x, d)}%</span>`;
+const hhmm = (iso) => iso ? iso.slice(11, 16) : "";
+const ddmm = (iso) => iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)} ${iso.slice(11, 16)}` : "";
+const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+                set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }, del(k){ try { localStorage.removeItem(k); } catch(e){} } };
+const sess = { get(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} } };
+
+// ---------- giải mã (AES-256-GCM, khóa PBKDF2-SHA256, khớp tools/crypto.py của engine) ----------
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+async function decrypt(box, pass) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({name: "PBKDF2", salt: b64(box.salt), iterations: box.iter, hash: "SHA-256"},
+                                            base, {name: "AES-GCM", length: 256}, false, ["decrypt"]);
+  const pt = await crypto.subtle.decrypt({name: "AES-GCM", iv: b64(box.iv)}, key, b64(box.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+async function load(pass) {
+  const r = await fetch("data.enc.json?t=" + Date.now(), {cache: "no-store"});
+  if (!r.ok) throw new Error("Chưa có dữ liệu (engine chưa chạy lần nào)");
+  return decrypt(await r.json(), pass);
+}
+
+// ---------- biểu đồ mini ----------
+function spark(arr, w = 110, h = 34) {
+  const v = (arr || []).filter((x) => x !== null && x !== undefined);
+  if (v.length < 2) return "";
+  const lo = Math.min(...v), hi = Math.max(...v), rg = hi - lo || 1;
+  const pts = v.map((x, i) => `${(i / (v.length - 1) * (w - 2) + 1).toFixed(1)},${(h - 2 - (x - lo) / rg * (h - 4)).toFixed(1)}`).join(" ");
+  const col = v[v.length - 1] >= v[0] ? "#4fd1b5" : "#ff8a80";
+  return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline fill="none" stroke="${col}" stroke-width="1.6" points="${pts}"/></svg>`;
+}
+const tile = (k, v) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div></div>`;
+const pill = (a) => `<span class="pill ${ACTION_CLS[a] || "wait"}">${esc(a)}</span>`;
+const list = (arr) => (arr && arr.length) ? `<ul class="pts">${arr.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
+const chipSyms = (arr) => (arr || []).map((s) => `<span class="chip">${esc(s)}</span>`).join("");
+
+// ---------- tab: Bản tin ----------
+function viewTin() {
+  const n = DATA.news || {}, m = DATA.market || {}, b = n.brief;
+  const watch = new Set(DATA.watchlist?.symbols || []);
+  let items = n.items || [];
+  if (NEWS_F === "hot") items = items.filter((x) => x.importance >= 4);
+  if (NEWS_F === "wl") items = items.filter((x) => (x.tickers || []).some((t) => watch.has(t)));
+  if (NEWS_F === "vm") items = items.filter((x) => ["Vĩ mô", "Quốc tế", "Thị trường"].includes(x.category));
+  const mk = m.error ? `<div class="sub">VN-Index: ${esc(m.error)}</div>` :
+    `<div class="row"><div><div class="label" style="margin:0">VN-Index</div>
+      <div style="font-size:24px;font-weight:700;margin-top:4px">${num(m.price, 2)}</div>
+      <div class="sub">Hôm nay ${sgn(m.change_1d_pct)} · 1 tháng ${sgn(m.change_1m_pct)} · xu hướng ${esc(m.trend)} · RSI ${num(m.rsi14, 0)}</div></div>
+      ${spark(m.closes_60d, 130, 46)}</div>`;
+  const brief = b ? `<section class="card"><div class="row"><div class="label" style="margin:0">☀️ Bản tin sáng · ${ddmm(b.time)}</div><span class="chip">${esc(b.mood)}</span></div>
+      <h3 style="margin-top:8px">${esc(b.title)}</h3>
+      ${(b.sections || []).map((s) => `<div style="margin-top:10px;font-weight:600;font-size:14px">${esc(s.heading)}</div>${list(s.bullets)}`).join("")}
+      ${(b.watchlist_notes || []).length ? `<div style="margin-top:10px;font-weight:600;font-size:14px">⭐ Danh mục theo dõi</div><ul class="pts">${b.watchlist_notes.map((w) => `<li><b>${esc(w.symbol)}</b>: ${esc(w.note)}</li>`).join("")}</ul>` : ""}
+      ${(b.events_today || []).length ? `<div style="margin-top:10px;font-weight:600;font-size:14px">📅 Sự kiện hôm nay</div>${list(b.events_today)}` : ""}
+    </section>` : "";
+  const dg = n.digest ? `<div class="sub" style="margin-top:6px">Tâm lý tin gần nhất: <b>${esc(n.digest.mood)}</b> – ${esc(n.digest.headline)}</div>` : "";
+  return `<section class="card">${mk}</section>${brief}
+    <div class="filters">${[["all", "Tất cả"], ["hot", "Quan trọng"], ["wl", "Theo dõi"], ["vm", "Vĩ mô"]].map(([k, l]) =>
+      `<button data-nf="${k}" class="${NEWS_F === k ? "on" : ""}">${l}</button>`).join("")}</div>
+    <section class="card"><div class="label">Tin tức (${items.length})</div>${dg}
+      ${items.slice(0, 80).map((x) => `<div class="news">
+        <a href="${esc(x.link)}" target="_blank" rel="noopener"><span class="dot" style="background:${SENT_COLOR[x.sentiment] || "#8b94a3"}"></span>${esc(x.title)}</a>
+        <div class="sub" style="margin-top:4px;line-height:1.45">${esc(x.summary)}</div>
+        <div class="m">${chipSyms(x.tickers)} ${esc(x.category)} · ${esc(x.source)} · ${ddmm(x.time)} · mức ${x.importance}/5</div></div>`).join("") || `<div class="empty">Chưa có tin.</div>`}
+    </section>`;
+}
+
+// ---------- tab: Tiềm năng ----------
+function viewTop() {
+  const s = DATA.scout;
+  const presetBtns = `<div class="filters">${Object.entries(PRESETS).map(([k, l]) =>
+    `<button data-cmd="/loc ${k}" class="${s && s.preset === k ? "on" : ""}">${l}</button>`).join("")}</div>
+    <div class="sub">Bấm một bộ lọc để Scout quét lại theo tiêu chí đó (cần token, ~2–3 phút).</div>`;
+  if (!s) return presetBtns + `<div class="empty">Chưa có kết quả Scout.</div>`;
+  const funnel = [["Vũ trụ", s.universe], ["Tầng 1", s.passed_tier1], ["Tầng 2", s.passed_tier2], ["AI chọn", (s.picks || []).length]];
+  const maxF = Math.max(...funnel.map((f) => f[1] || 0), 1);
+  return `${presetBtns}
+    <section class="card"><div class="row"><div class="label" style="margin:0">🔍 Phễu · ${esc(s.preset_name)}</div><span class="sub">${ddmm(s.time)}${s.live ? " · trong phiên" : ""}</span></div>
+      ${funnel.map(([k, v]) => `<div class="row" style="margin-top:8px"><span class="sub" style="width:70px">${k}</span><div class="bar" style="flex:1"><div style="width:${(v || 0) / maxF * 100}%"></div></div><b style="width:40px;text-align:right">${v ?? "–"}</b></div>`).join("")}
+      ${s.market_note ? `<p class="t">🌐 ${esc(s.market_note)}</p>` : ""}
+    </section>
+    ${(s.picks || []).map((p, i) => { const q = p.quant || {}; return `<section class="card">
+      <div class="row"><div><h3>${i + 1}. ${esc(p.symbol)} <span class="sub">· ${esc(q.sector)}</span></h3>
+        <div style="margin-top:6px"><span class="chip">${esc(p.strategy)}</span><span class="chip">⭐ ${p.conviction}/10</span><span class="chip">điểm ${num(q.score, 0)}</span></div></div>
+        ${spark(q.closes)}</div>
+      <div class="grid4" style="margin-top:10px">${tile("Giá", num(q.price, 2))}${tile("Hôm nay", sgn(q.change_1d_pct))}${tile("1 tháng", sgn(q.change_1m_pct))}${tile("KL / TB20", num(q.volume_ratio, 1) + "×")}
+        ${tile("RSI", num(q.rsi14, 0))}${tile("P/E", num(q.pe, 1))}${tile("ROE", q.roe ? num(q.roe, 1) + "%" : "–")}${tile("EPS YoY", q.eps_growth_yoy !== null && q.eps_growth_yoy !== undefined ? sgn(q.eps_growth_yoy, 0) : "–")}</div>
+      <p class="t">${esc(p.reason)}</p>
+      ${p.catalyst ? `<div class="sub">⚡ ${esc(p.catalyst)}</div>` : ""}
+      <div class="sub" style="margin-top:4px">⚠️ ${esc(p.risk)}</div>
+      <div class="row" style="margin-top:10px"><div class="sub">👉 ${esc(p.entry_note)}</div><button class="btn sm" data-cmd="/pt ${esc(p.symbol)}">Phân tích sâu</button></div>
+    </section>`; }).join("")}
+    ${(s.rejected || []).length ? `<section class="card"><div class="label">Bị loại ở tầng AI</div><ul class="pts">${s.rejected.map((r) => `<li><b>${esc(r.symbol)}</b>: ${esc(r.reason)}</li>`).join("")}</ul></section>` : ""}`;
+}
+
+// ---------- tab: Phân tích ----------
+function reportCard(r, open) {
+  const d = r.decision || {}, rk = r.risk || {};
+  const fin = r.debate?.final || {};
+  const side = (t, x) => x ? `<div class="agent"><div class="row"><b>${t}</b><span class="score">${x.conviction}/10</span></div>
+      <p class="t">${esc(x.thesis)}</p>${list(x.arguments)}${x.rebuttal ? `<div class="sub" style="margin-top:6px">↩︎ ${esc(x.rebuttal)}</div>` : ""}</div>` : "";
+  return `<section class="card"><details ${open ? "open" : ""} data-rep="${esc(r.symbol + r.time)}">
+    <summary><div class="row"><div><h3>${esc(r.symbol)} <span class="sub">· ${esc(r.sector)} · ${ddmm(r.time)}</span></h3>
+      <div style="margin-top:6px">${pill(d.action)} <span class="sub">tin cậy ${d.confidence ?? "–"}% · ${esc(d.horizon)}</span></div></div>
+      ${spark(r.closes)}</div></summary>
+    <div class="grid4" style="margin-top:12px">${tile("Giá", num(r.price, 2))}${tile("Vùng mua", d.buy_zone_high ? `${num(d.buy_zone_low)}–${num(d.buy_zone_high)}` : "–")}
+      ${tile("Mục tiêu", `${num(d.target_price)} ${d.upside_pct !== undefined ? sgn(d.upside_pct, 0) : ""}`)}${tile("Cắt lỗ", `${num(d.stop_loss)} ${d.downside_pct !== undefined ? sgn(d.downside_pct, 0) : ""}`)}</div>
+    <p class="t">${esc(d.thesis)}</p>
+    <div class="grid2"><div><div class="label" style="margin:8px 0 0">Lý do chính</div>${list(d.key_reasons)}</div>
+      <div><div class="label" style="margin:8px 0 0">Rủi ro</div>${list(d.key_risks)}</div></div>
+    ${(d.watch_triggers || []).length ? `<div class="label" style="margin:12px 0 0">Theo dõi để đổi quyết định</div>${list(d.watch_triggers)}` : ""}
+    <div class="label" style="margin:16px 0 0">4 chuyên viên</div>
+    ${Object.entries(r.analysts || {}).map(([k, a]) => `<div class="agent"><div class="row"><b>${AGENT_NAME[k] || esc(k)}</b><span class="score">${a.score}/10 · ${esc(a.stance)}</span></div>
+      <p class="t">${esc(a.summary)}</p>${list(a.key_points)}
+      ${a.fair_value ? `<div class="sub" style="margin-top:6px">Giá hợp lý: <b>${num(a.fair_value)}</b> – ${esc(a.valuation_method)}</div>` : ""}
+      ${(a.risks || []).length ? `<div class="sub" style="margin-top:6px">⚠️ ${a.risks.map(esc).join(" · ")}</div>` : ""}</div>`).join("")}
+    ${Object.keys(r.errors || {}).length ? `<div class="banner">Agent lỗi: ${Object.keys(r.errors).map(esc).join(", ")}</div>` : ""}
+    <div class="label" style="margin:16px 0 0">⑤ Tranh luận Bull ⇄ Bear (${r.debate?.rounds || 1} vòng)</div>
+    <div class="vs">${side("🐂 Phe mua", fin.bull)}${side("🐻 Phe bán", fin.bear)}</div>
+    <div class="label" style="margin:16px 0 0">⑥ Quản trị rủi ro</div>
+    <div class="agent"><div class="row"><b>Rủi ro ${esc(rk.risk_level)}</b><span class="score">tỷ trọng ≤ ${num(rk.max_position_pct, 0)}%</span></div>
+      <p class="t">${esc(rk.summary)}</p><div class="sub">${esc(rk.liquidity_note)}</div>
+      <ul class="pts">${(rk.risks || []).map((x) => `<li><b>${esc(x.severity)}</b> – ${esc(x.risk)}: <i>${esc(x.mitigation)}</i></li>`).join("")}</ul></div>
+    <div class="sub" style="margin-top:12px">Nguồn: ${esc(r.source)} · ${num(r.seconds, 0)} giây · Thông tin tham khảo, không phải lời khuyên đầu tư.</div>
+  </details></section>`;
+}
+function viewPt() {
+  const reps = DATA.reports || [];
+  return `<section class="card"><div class="label">Gửi lệnh cho đội agent</div>
+      <label for="cmdInp" class="sr-only">Lệnh</label>
+      <textarea id="cmdInp" class="inp" rows="2" placeholder="/pt FPT   hoặc   so sánh HPG và HSG"></textarea>
+      <div class="row" style="margin-top:8px"><div class="sub" id="cmdMsg">${pendingText()}</div><button class="btn" id="cmdSend">Gửi</button></div>
+      <div style="margin-top:8px">${["/pt FPT", "/pt HPG", "/top", "/tin"].map((c) => `<button class="chip" style="background:none;cursor:pointer" data-fill="${c}">${c}</button>`).join("")}</div>
+    </section>
+    ${reps.map((r, i) => reportCard(r, i === 0 && OPEN === null || OPEN === r.symbol + r.time)).join("") || `<div class="empty">Chưa có báo cáo. Gửi lệnh /pt MÃ để bắt đầu.</div>`}`;
+}
+
+// ---------- tab: Theo dõi ----------
+function viewWl() {
+  const w = DATA.watchlist || {rows: []};
+  return `<section class="card"><div class="label">Thêm / bỏ mã</div>
+      <div style="display:flex;gap:8px"><label for="wlInp" class="sr-only">Mã</label><input id="wlInp" class="inp" placeholder="VD: VCB MWG" style="text-transform:uppercase">
+      <button class="btn" id="wlAdd">Thêm</button></div>
+      <div class="sub" style="margin-top:8px">Cảnh báo Telegram: <b>${w.alerts ? "bật" : "tắt"}</b> · <button class="chip" style="background:none;cursor:pointer" data-cmd="/canhbao ${w.alerts ? "off" : "on"}">${w.alerts ? "Tắt" : "Bật"}</button></div></section>
+    ${(w.rows || []).map((r) => r.error ? `<section class="card"><b>${esc(r.symbol)}</b> <span class="sub">${esc(r.error)}</span></section>` :
+      `<section class="card"><div class="row"><div><h3>${esc(r.symbol)} <span class="sub">· ${esc(r.sector)}</span></h3>
+        <div class="sub" style="margin-top:4px">${num(r.price, 2)} · ${sgn(r.change_1d_pct)} hôm nay · ${sgn(r.change_1m_pct)} 1 tháng</div></div>${spark(r.closes)}</div>
+        <div class="grid4" style="margin-top:10px">${tile("Xu hướng", esc(r.trend))}${tile("RSI", num(r.rsi14, 0))}${tile("KL/TB20", num(r.volume_ratio, 1) + "×")}${tile("Từ đỉnh 52T", sgn(r.pct_from_52w_high, 0))}</div>
+        ${r.last_action ? `<div class="sub" style="margin-top:8px">Khuyến nghị gần nhất: ${pill(r.last_action.action)} ${ddmm(r.last_action.time)}</div>` : ""}
+        ${(r.news || []).length ? list(r.news) : ""}
+        <div class="row" style="margin-top:10px"><button class="btn ghost sm" data-cmd="/bo ${esc(r.symbol)}">Bỏ theo dõi</button><button class="btn sm" data-cmd="/pt ${esc(r.symbol)}">Phân tích sâu</button></div>
+      </section>`).join("") || `<div class="empty">Chưa theo dõi mã nào.</div>`}`;
+}
+
+// ---------- tab: Lịch sử ----------
+function viewLs() {
+  const reps = DATA.reports || [], usage = DATA.usage || {}, run = DATA.run || {};
+  const days = Object.entries(usage).slice(0, 14);
+  const maxU = Math.max(...days.map(([, u]) => u.usd || 0), 0.01);
+  return `<section class="card"><div class="label">Khuyến nghị đã đưa ra</div>
+      <table><thead><tr><th>Thời gian</th><th>Mã</th><th>Quyết định</th><th class="num">Giá</th><th class="num">Mục tiêu</th></tr></thead><tbody>
+      ${reps.map((r) => `<tr><td>${ddmm(r.time)}</td><td><b>${esc(r.symbol)}</b></td><td>${pill(r.decision?.action)}</td><td class="num">${num(r.price, 2)}</td><td class="num">${num(r.decision?.target_price)}</td></tr>`).join("")
+        || `<tr><td colspan="5" class="empty">Chưa có.</td></tr>`}</tbody></table></section>
+    <section class="card"><div class="label">Scout các lần gần đây</div>
+      ${(DATA.scout_history || []).map((h) => `<div class="news"><div class="sub">${ddmm(h.time)} · ${esc(PRESETS[h.preset] || h.preset)}</div><div>${chipSyms(h.symbols) || '<span class="sub">không có mã</span>'}</div></div>`).join("") || `<div class="empty">Chưa có.</div>`}</section>
+    <section class="card"><div class="label">Chi phí API (ước tính)</div>
+      ${days.map(([d, u]) => `<div class="row" style="margin-top:8px"><span class="sub" style="width:80px">${d.slice(8, 10)}/${d.slice(5, 7)}</span><div class="bar" style="flex:1"><div style="width:${(u.usd || 0) / maxU * 100}%"></div></div><b style="width:70px;text-align:right">$${num(u.usd, 2)}</b></div>`).join("") || `<div class="empty">Chưa có.</div>`}
+    </section>
+    <section class="card"><div class="label">Lần chạy gần nhất</div>
+      <div class="sub">Chế độ <b>${esc(run.mode)}</b> · nguồn dữ liệu ${esc((run.data_source || []).join(", "))} · ~$${num(run.usd_this_run, 3)}</div>
+      ${list(run.done)}${(run.errors || []).length ? `<div class="banner">${run.errors.map(esc).join("<br>")}</div>` : ""}</section>`;
+}
+
+// ---------- tab: Cài đặt ----------
+function viewCaiDat() {
+  const c = DATA.dieu_khien || {};
+  return `<section class="card"><div class="label">Gửi lệnh từ app</div>
+    <div class="sub" style="margin-bottom:10px">Dán token GitHub (fine-grained) cho repo <b>${esc(c.repo)}</b> với quyền <b>Actions: Read and write</b>.
+    Token được mã hóa bằng mật khẩu app và chỉ lưu trên máy này.</div>
+    <label for="tokInp" class="sr-only">Token GitHub</label>
+    <input id="tokInp" class="inp" type="password" autocomplete="off" placeholder="${TOKEN ? "Đã có token (nhập để thay)" : "github_pat_..."}">
+    <div class="grid2" style="margin-top:10px"><button class="btn" id="tokSave">Lưu token</button><button class="btn red" id="tokDel" ${TOKEN ? "" : "disabled"}>Xóa token</button></div>
+    <div class="sub" id="tokMsg" style="margin-top:8px">${TOKEN ? "Trạng thái: đã cài, gửi lệnh được." : "Trạng thái: chưa cài."}</div></section>
+    <section class="card"><div class="label">Cách tạo token</div><ul class="pts">
+      <li>Mở github.com/settings/personal-access-tokens/new</li>
+      <li>Repository access: Only select repositories → ${esc((c.repo || "").split("/")[1])}</li>
+      <li>Permissions → Actions: Read and write</li><li>Generate token rồi dán vào ô trên</li></ul></section>
+    <section class="card"><div class="label">Lệnh Telegram</div><ul class="pts">
+      <li>/pt FPT – phân tích sâu · /top – mã tiềm năng · /tin [MÃ]</li>
+      <li>/loc canslim|breakout|gia-tri|phuc-hoi|tong-hop</li>
+      <li>/theo VCB · /bo VCB · /ds · /canhbao on|off · /chiphi</li>
+      <li>Nhắn tự nhiên: "ngân hàng nào đáng mua?"</li></ul></section>
+    <button class="btn ghost" style="width:100%" data-tab="tin">Quay lại</button>`;
+}
+
+// ---------- gửi lệnh (workflow_dispatch tới repo engine) ----------
+function pendingInfo() { try { return JSON.parse(store.get("qbkck_sent") || "null"); } catch (_) { return null; } }
+function pendingText() {
+  const p = pendingInfo();
+  if (p && Date.now() - p.t < WAIT_MS + 60000) return `⏳ Đã gửi lúc ${p.luc}: "${esc(p.lenh)}" – kết quả sẽ có sau ~2–3 phút (và trên Telegram).`;
+  return TOKEN ? "Lệnh chạy ngay trên GitHub Actions." : "Chưa có token – bấm ⚙️ để cài.";
+}
+async function sendCommands(text) {
+  const lines = text.split("\n").map((x) => x.trim()).filter(Boolean);
+  if (!lines.length) return;
+  if (!TOKEN) { alert("Chưa có token gửi lệnh. Bấm ⚙️ để cài."); return; }
+  const c = DATA.dieu_khien;
+  const r = await fetch(`https://api.github.com/repos/${c.repo}/actions/workflows/${c.workflow}/dispatches`, {
+    method: "POST", headers: {"Authorization": "Bearer " + TOKEN, "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"},
+    body: JSON.stringify({ref: c.ref, inputs: {lenh: lines.slice(0, 10).join("\n")}})});
+  if (r.status === 204) {
+    store.set("qbkck_sent", JSON.stringify({t: Date.now(), lenh: lines.join(" | ").slice(0, 60), luc: new Date().toLocaleTimeString("vi-VN", {hour: "2-digit", minute: "2-digit"})}));
+    render();
+    setTimeout(async () => { try { DATA = await load(PASS); render(); } catch (_) {} }, WAIT_MS);
+    return true;
+  }
+  const msg = {401: "Token sai hoặc đã hết hạn", 403: "Token không có quyền Actions: Read and write", 404: "Token chưa được cấp quyền cho repo engine", 422: "Workflow command.yml chưa có trên nhánh " + c.ref}[r.status];
+  alert("Không gửi được: " + (msg || ("lỗi " + r.status)));
+}
+async function aesKey(pass, salt, usage) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name: "PBKDF2", salt, iterations: 210000, hash: "SHA-256"}, base, {name: "AES-GCM", length: 256}, false, [usage]);
+}
+const toB64 = (u8) => btoa(String.fromCharCode(...u8));
+async function saveToken(tok) {
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({name: "AES-GCM", iv}, await aesKey(PASS, salt, "encrypt"), new TextEncoder().encode(tok)));
+  store.set("qbkck_tok", JSON.stringify({salt: toB64(salt), iv: toB64(iv), ct: toB64(ct)}));
+  TOKEN = tok;
+}
+async function loadToken() {
+  const raw = store.get("qbkck_tok"); if (!raw) return null;
+  try { const b = JSON.parse(raw);
+    const pt = await crypto.subtle.decrypt({name: "AES-GCM", iv: b64(b.iv)}, await aesKey(PASS, b64(b.salt), "decrypt"), b64(b.ct));
+    return new TextDecoder().decode(pt); } catch (_) { return null; }
+}
+
+// ---------- render ----------
+function render() {
+  const sessName = {pre: "trước phiên", open: "đang giao dịch", lunch: "nghỉ trưa", post: "sau phiên", closed: "nghỉ"}[DATA.session] || "";
+  $("#upd").innerHTML = `Cập nhật ${ddmm(DATA.updated)} · ${sessName}${DATA.demo ? ' · <span class="warn">DEMO</span>' : ""}`;
+  $("#tabs").innerHTML = TABS.map(([k, l, ico]) => `<button data-tab="${k}" class="${TAB === k ? "on" : ""}" aria-label="${l}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ico}</svg>${l}</button>`).join("");
+  const views = {tin: viewTin, top: viewTop, pt: viewPt, wl: viewWl, ls: viewLs, cai: viewCaiDat};
+  $("#view").innerHTML = (DATA.demo ? `<div class="banner">Đang chạy chế độ DEMO (dữ liệu giả lập, AI giả lập) – chưa phải phân tích thật.</div>` : "") + views[TAB]();
+}
+document.addEventListener("click", async (e) => {
+  const t = e.target.closest("[data-tab],[data-nf],[data-cmd],[data-fill],#cmdSend,#wlAdd,#tokSave,#tokDel,#reload,#settings");
+  if (!t) return;
+  if (t.dataset.tab) { TAB = t.dataset.tab; render(); window.scrollTo(0, 0); }
+  else if (t.dataset.nf) { NEWS_F = t.dataset.nf; render(); }
+  else if (t.dataset.fill) { $("#cmdInp").value = t.dataset.fill; $("#cmdInp").focus(); }
+  else if (t.dataset.cmd) { if (confirm(`Gửi lệnh "${t.dataset.cmd}"?`)) await sendCommands(t.dataset.cmd); }
+  else if (t.id === "cmdSend") { if (await sendCommands($("#cmdInp").value)) $("#cmdInp").value = ""; }
+  else if (t.id === "wlAdd") { const v = $("#wlInp").value.trim().toUpperCase(); if (v) await sendCommands("/theo " + v); }
+  else if (t.id === "tokSave") { const v = $("#tokInp").value.trim(); if (v) { await saveToken(v); render(); } }
+  else if (t.id === "tokDel") { store.del("qbkck_tok"); TOKEN = null; render(); }
+  else if (t.id === "settings") { TAB = "cai"; render(); }
+  else if (t.id === "reload") { try { DATA = await load(PASS); render(); } catch (err) { alert(err.message); } }
+});
+document.addEventListener("toggle", (e) => { if (e.target.dataset?.rep && e.target.open) OPEN = e.target.dataset.rep; }, true);
+
+async function unlock(pass) {
+  $("#lockMsg").textContent = "Đang giải mã…";
+  try {
+    DATA = await load(pass); PASS = pass; sess.set("qbkck_pw", pass);
+    TOKEN = await loadToken();
+    $("#lock").hidden = true; $("#app").hidden = false; render();
+  } catch (err) {
+    $("#lockMsg").textContent = err.name === "OperationError" ? "Sai mật khẩu." : err.message;
+  }
+}
+$("#lockForm").addEventListener("submit", (e) => { e.preventDefault(); unlock($("#pw").value); });
+const saved = sess.get("qbkck_pw"); if (saved) unlock(saved);
+</script>
+</body>
+</html>
